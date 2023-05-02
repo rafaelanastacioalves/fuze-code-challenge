@@ -1,6 +1,7 @@
 package com.example.rafaelanastacioalves.moby.repository.http;
 
 
+import com.example.rafaelanastacioalves.fuzecodechallenge.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
 import okhttp3.Request
@@ -14,8 +15,8 @@ class AppInterceptor : Interceptor {
         // Request customization: add request headers
         val requestBuilder: Request.Builder = original.newBuilder()
                 .addHeader("Cache-Control", "no-cache")
-                .addHeader("Cache-Control", "no-store");
-
+                .addHeader("Cache-Control", "no-store")
+                .addHeader("Authorization", "Bearer " + BuildConfig.BEARER_TOKEN);
         val request: Request = requestBuilder.build();
         return chain.proceed(request);
     }

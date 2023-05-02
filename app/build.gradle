@@ -32,7 +32,7 @@ android {
         debug {
             signingConfig signingConfigs.debug
             testCoverageEnabled = true
-
+            it.buildConfigField("String", "BEARER_TOKEN", "\"AiJWlkxy0noTFP3TejpeH6Wm1Pb-q8d3Yk6o_eK_Mvb265Ff02U\"")
         }
         release {
             minifyEnabled false
