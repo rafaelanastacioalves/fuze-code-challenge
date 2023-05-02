@@ -6,7 +6,6 @@ import com.example.rafaelanastacioalves.moby.repository.database.DAO
 import com.example.rafaelanastacioalves.moby.repository.http.APIClient
 
 class AppRepository(
-    private val appDao: DAO,
     var apiClient: APIClient) {
 
     suspend fun mainEntity(): Resource<List<Match>> {
@@ -26,7 +25,7 @@ class AppRepository(
     }
     
 
-    suspend fun Match(requestId: String): Resource<Match> {
+    suspend fun matchDetails(requestId: String): Resource<Match> {
         return object : NetworkBoundResource<Match, Match>() {
             override suspend fun fecthFromHttp(): Match? {
                 return apiClient.getMatchDetails(requestId)
