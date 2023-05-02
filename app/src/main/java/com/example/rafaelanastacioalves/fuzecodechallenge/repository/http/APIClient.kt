@@ -1,20 +1,17 @@
 package com.example.rafaelanastacioalves.moby.repository.http;
 
 
-import com.example.rafaelanastacioalves.moby.domain.entities.EntityDetails
-import com.example.rafaelanastacioalves.moby.domain.entities.MainEntity
+import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Match
 import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface APIClient {
 
     @POST("/trip-packages")
-    suspend fun getMainEntityList(): List<MainEntity>;
+    suspend fun getMatchList(): List<Match>;
 
     @POST("/trip-packages/{entityID}")
-    suspend fun getEntityDetails(@Path("entityID") id: String): EntityDetails
+    suspend fun getMatchDetails(@Path("entityID") id: String): Match
 
-    @POST("/trip-packages-additional")
-    suspend fun getMainEntityListAdditional(): List<MainEntity>
 
 }

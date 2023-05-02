@@ -25,7 +25,7 @@ android {
     buildTypes {
 
         buildTypes.each {
-            it.buildConfigField "String", "API_BASE_URL", '"https://private-ff953-template25.apiary-mock.com"'
+            it.buildConfigField "String", "API_BASE_URL", '"https://api.pandascore.co/csgo"'
             it.buildConfigField "boolean", "IS_TEST", 'false'
 
         }
