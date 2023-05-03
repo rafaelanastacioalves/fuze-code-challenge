@@ -2,14 +2,12 @@ package com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -47,28 +45,42 @@ fun LeagueAndSerieRepresentation(modifier: Modifier, match: Match) {
 @Composable
 fun TeamRepresentation(modifier: Modifier, match: Match) {
     Row(modifier = modifier.clipToBounds()) {
-        Time1(modifier, details = match.opponents[0].opponentDetails)
-        Text(modifier = modifier, text = "VS")
-        Time2(modifier, details = match.opponents[1].opponentDetails)
+        if (match.opponents.isEmpty().not()) {
+            Time1(modifier, details = match.opponents.getOrNull(0)?.opponentDetails)
+            Text(modifier = modifier, text = "VS")
+            Time2(modifier, details = match.opponents.getOrNull(1)?.opponentDetails)
+        } else {
+            Text(modifier = modifier, text = "Opponents not defined")
+        }
+
     }
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-private fun Time2(modifier: Modifier, details: OpponentDetails) {
-    Column(modifier) {
-        GlideImage(model = details.imageUrl, contentDescription = details.slug)
-        Text(modifier = modifier, text = "Time 2")
+private fun Time2(modifier: Modifier, details: OpponentDetails?) {
+    if (details != null) {
+        Column(modifier) {
+            GlideImage(model = details.imageUrl, contentDescription = details.slug)
+            Text(modifier = modifier, text = "Time 2")
+        }
+    } else {
+        Text(modifier = modifier, text = "Opponent not defined")
     }
+
 
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-private fun Time1(modifier: Modifier, details: OpponentDetails) {
-    Column(modifier){
-        GlideImage(model = details.imageUrl, contentDescription = details.slug)
-        Text(modifier = modifier, text = "Time 1")
+private fun Time1(modifier: Modifier, details: OpponentDetails?) {
+    if (details != null) {
+        Column(modifier) {
+            GlideImage(model = details.imageUrl, contentDescription = details.slug)
+            Text(modifier = modifier, text = "Time 1")
+        }
+    } else {
+        Text(modifier = modifier, text = "Opponent not defined")
     }
 }
 

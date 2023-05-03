@@ -1,9 +1,7 @@
-package com.example.rafaelanastacioalves.moby.domain.interactors
-
 
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Match
 import com.example.rafaelanastacioalves.moby.domain.entities.Resource
-import com.example.rafaelanastacioalves.moby.repository.AppRepository
+import com.example.rafaelanastacioalves.moby.domain.interactors.Interactor
 import kotlinx.coroutines.flow.FlowCollector
 
 class EntityDetailsInteractor(

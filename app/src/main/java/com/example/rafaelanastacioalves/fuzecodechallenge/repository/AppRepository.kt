@@ -6,7 +6,7 @@ import com.example.rafaelanastacioalves.moby.domain.entities.Resource
 class AppRepository(
     var apiClient: APIClient) {
 
-    suspend fun mainEntity(): Resource<List<Match>> {
+    suspend fun getMatchList(): Resource<List<Match>> {
         return object : NetworkBoundResource<List<Match>, List<Match>>() {
             override suspend fun fecthFromHttp(): List<Match>? {
 

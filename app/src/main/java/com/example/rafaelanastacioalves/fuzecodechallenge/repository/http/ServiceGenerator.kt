@@ -21,6 +21,7 @@ object ServiceGenerator {
 
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         val retrofit = builder.client(httpClient
+                .addInterceptor(appInterceptor)
                 .addInterceptor(interceptor)
                 .build()).build()
         return retrofit.create(serviceClass)
