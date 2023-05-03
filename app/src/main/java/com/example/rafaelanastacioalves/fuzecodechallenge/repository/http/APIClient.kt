@@ -1,6 +1,3 @@
-package com.example.rafaelanastacioalves.moby.repository.http;
-
-
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Match
 import retrofit2.http.POST
 import retrofit2.http.Path

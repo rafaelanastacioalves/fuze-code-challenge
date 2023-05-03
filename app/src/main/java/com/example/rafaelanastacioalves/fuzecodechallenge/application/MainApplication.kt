@@ -1,9 +1,7 @@
-package com.example.rafaelanastacioalves.moby.application
-
+package com.example.rafaelanastacioalves.fuzecodechallenge.application
+import AppRepository
+import ServiceLocator
 import android.app.Application
-import android.util.Log
-
-import com.example.rafaelanastacioalves.moby.repository.AppRepository
 
 
 class MainApplication : Application() {
@@ -11,7 +9,6 @@ class MainApplication : Application() {
     val getAppRepository : AppRepository
         get() = ServiceLocator.provideAppRespository(this)
     override fun onCreate() {
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         super.onCreate()
     }
 

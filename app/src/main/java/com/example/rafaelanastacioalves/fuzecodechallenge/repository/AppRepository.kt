@@ -1,9 +1,7 @@
-package com.example.rafaelanastacioalves.moby.repository
 
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Match
 import com.example.rafaelanastacioalves.moby.domain.entities.Resource
-import com.example.rafaelanastacioalves.moby.repository.database.DAO
-import com.example.rafaelanastacioalves.moby.repository.http.APIClient
+
 
 class AppRepository(
     var apiClient: APIClient) {

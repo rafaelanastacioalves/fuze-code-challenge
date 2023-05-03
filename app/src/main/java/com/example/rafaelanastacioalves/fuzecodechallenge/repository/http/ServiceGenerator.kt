@@ -1,6 +1,3 @@
-package com.example.rafaelanastacioalves.moby.repository.http
-
-
 import com.example.rafaelanastacioalves.fuzecodechallenge.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
