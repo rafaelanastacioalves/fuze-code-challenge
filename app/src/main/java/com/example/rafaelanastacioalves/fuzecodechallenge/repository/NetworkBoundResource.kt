@@ -24,7 +24,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
         val resultData: ResultType?
         try {
             resultData = fecthFromHttp()
-            result = Resource(Resource.Status.SUCCESS, resultData, null)
+            result = Resource(Resource.Status.SUCCESS, resultData, "No error")
 
         } catch (exception: Exception) {
             if (exception is HttpException) {
@@ -32,7 +32,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
             } else {
                 result = Resource.error(Resource.Status.GENERIC_ERROR,
                         null,
-                        null)
+                        "No error")
             }
         }
     }
@@ -42,11 +42,11 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
         try {
             localData = getFromDB()
             result = if (localData != null) {
-                Resource(Resource.Status.SUCCESS, localData, null)
+                Resource(Resource.Status.SUCCESS, localData, "")
             } else {
                 val resultData: ResultType? = fecthFromHttp()
                 saveIntoDB(resultData)
-                Resource(Resource.Status.SUCCESS, getFromDB(), null)
+                Resource(Resource.Status.SUCCESS, getFromDB(), "")
 
             }
         } catch (exception: Exception) {
@@ -57,7 +57,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                 Log.e("DataBase", exception.message ?: "")
                 result = Resource.error(Resource.Status.GENERIC_ERROR,
                         null,
-                        null)
+                        "")
             }
         }
     }
@@ -68,14 +68,14 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                 result = Resource.error(
                         Resource.Status.INTERNAL_SERVER_ERROR
                         , null
-                        , null)
+                        , "")
             }
 
             else -> {
                 result = Resource.error(
                         Resource.Status.GENERIC_ERROR,
                         null,
-                        null
+                        ""
                 )
             }
 

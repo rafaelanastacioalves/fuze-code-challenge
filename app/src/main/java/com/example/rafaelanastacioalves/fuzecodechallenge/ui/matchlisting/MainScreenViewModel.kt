@@ -20,7 +20,13 @@ class MainScreenViewModel(val matchListingInteractor : Interactor<Resource<List<
 
 
     val matchListLiveData : LiveData<ViewState<Resource<List<Match>>>> = loadDataIfNecessary().map {
-        ViewState.Success(it)
+        when(it.status){
+            Resource.Status.SUCCESS -> ViewState.Success(it)
+            Resource.Status.INTERNAL_SERVER_ERROR -> ViewState.Error(it.message)
+            Resource.Status.GENERIC_ERROR -> ViewState.Error(it.message)
+            Resource.Status.LOADING -> ViewState.Loading
+        }
+
     }
 
     val observableListState = matchListLiveData.map { state ->
