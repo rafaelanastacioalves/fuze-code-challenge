@@ -6,7 +6,7 @@ import android.app.Application
 
 class MainApplication : Application() {
 
-    val getAppRepository : AppRepository
+    val appRepository : AppRepository
         get() = ServiceLocator.provideAppRespository(this)
     override fun onCreate() {
         super.onCreate()

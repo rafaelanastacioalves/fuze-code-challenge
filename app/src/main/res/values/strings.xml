@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">rafaelanastacioalves.fuzechallenge</string>
+    <string name="hello_world">Hello World\n</string>
+    <string name="matches">Partidas</string>
+    <string name="no_name_to_show">No name to show</string>
+    <string name="loading">LOADING</string>
+    <string name="error">ERROR</string>
 </resources>
