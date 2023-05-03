@@ -1,7 +1,5 @@
 package com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class Game(
@@ -15,7 +13,7 @@ data class Game(
     @SerializedName("length") val length: Int?,
     @SerializedName("match_id") val matchId: Int,
     @SerializedName("position") val position: Int,
-    @SerializedName("status") val status: String,
+    @SerializedName("status") val status: String?,
     @SerializedName("winner") val winner: Winner?,
-    @SerializedName("winner_type") val winnerType: String
+    @SerializedName("winner_type") val winnerType: String?
 )
