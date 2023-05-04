@@ -8,7 +8,7 @@ interface APIClient {
     @GET("/csgo/matches/upcoming")
     suspend fun getMatchList(): List<Match>;
 
-    @POST("/csgo/matches/{matchId}")
+    @GET("/csgo/matches/{matchId}")
     suspend fun getMatchDetails(@Path("matchId") id: String): Match
 
 

@@ -3,7 +3,7 @@ package com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-data class Match(
+  data class Match(
     @PrimaryKey
     @SerializedName("id")
     val id: Int = 1,
@@ -56,5 +56,7 @@ data class Match(
     @SerializedName("results")
     val results: List<Result> = listOf(),
     @SerializedName("streams_list")
-    val streamsList: List<Stream> = listOf()
+    val streamsList: List<Stream> = listOf(),
+    @SerializedName("players")
+    val players: List<Player> = listOf()
 )

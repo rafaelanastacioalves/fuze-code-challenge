@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.rafaelanastacioalves.fuzecodechallenge.application.MainApplication
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.RafaelanastacioalvesfuzechallengeTheme
 
@@ -25,24 +27,27 @@ class HomeFragment : Fragment() {
         MainScreenViewModelFactory(MatchListingInteractor((requireActivity().application as MainApplication).appRepository))
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        loadData()
         return ComposeView(requireContext()).apply {
             setContent {
                 RafaelanastacioalvesfuzechallengeTheme {
-                    MainScreen(mMainScreenViewModel, { id -> findNavController().navigate(id) })
+                    MainScreen(mMainScreenViewModel, { detailId -> goToDetailsScreen(detailId) })
                 }
             }
         }
+    }
+
+    private fun goToDetailsScreen(detailId: Int) {
+
+        val direction =
+            HomeFragmentDirections.actionHomeFragmentToEntityDetailsFragment(detailId.toString())
+        findNavController().navigate(direction)
     }
 
     private fun loadData() {

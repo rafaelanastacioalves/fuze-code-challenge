@@ -2,9 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-
+    id 'androidx.navigation.safeargs'
 }
-
 
 java {
     toolchain {
@@ -18,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.rafaelanastacioalves.fuzecodechallenge"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -39,7 +38,7 @@ android {
         debug {
             signingConfig signingConfigs.debug
             testCoverageEnabled = true
-            it.buildConfigField("String", "BEARER_TOKEN", "\"AiJWlkxy0noTFP3TejpeH6Wm1Pb-q8d3Yk6o_eK_Mvb265Ff02U\"")
+            it.buildConfigField("String", "BEARER_TOKEN", "\"7skRm9vYFONH8v6qSYUqJZjza1dDmzcjTjSMEfmubbTcLp-v0yA\"")
         }
         release {
             minifyEnabled false

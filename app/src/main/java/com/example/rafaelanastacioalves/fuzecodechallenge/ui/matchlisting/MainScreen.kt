@@ -68,7 +68,7 @@ fun MatchListScreen( modifier: Modifier = Modifier, list: List<Match>, onNavigat
     ) {
         items(items = list) { match ->
             MatchItemList(match = match, modifier = Modifier.clickable {
-                onNavigate(1)
+                onNavigate(match.id)
             })
         }
     }

@@ -19,9 +19,9 @@ import com.example.rafaelanastacioalves.moby.domain.interactors.Interactor
 class MainScreenViewModel(val matchListingInteractor : Interactor<Resource<List<Match>>, MatchListingInteractor.RequestValues>) : ViewModel() {
 
 
-    val matchListLiveData : LiveData<ViewState<Resource<List<Match>>>> = loadDataIfNecessary().map {
+    val matchListLiveData  = loadDataIfNecessary().map {
         when(it.status){
-            Resource.Status.SUCCESS -> ViewState.Success(it)
+            Resource.Status.SUCCESS -> ViewState.Success(it.data!!)
             Resource.Status.INTERNAL_SERVER_ERROR -> ViewState.Error(it.message)
             Resource.Status.GENERIC_ERROR -> ViewState.Error(it.message)
             Resource.Status.LOADING -> ViewState.Loading
@@ -31,7 +31,7 @@ class MainScreenViewModel(val matchListingInteractor : Interactor<Resource<List<
 
     val observableListState = matchListLiveData.map { state ->
         when (state) {
-            is ViewState.Success -> state.viewDate.data.orEmpty()
+            is ViewState.Success -> state.viewDate
             else -> emptyList<Match>()
         }.toMutableStateList()
 

@@ -16,7 +16,7 @@ abstract class Interactor<out T, in R : Interactor.RequestValues> {
     ) : Flow<T> {
 
         return flow<T> {
-            run(requestValue = null, flowCollector = this)
+            run(requestValue = params, flowCollector = this)
         }
     }
 
