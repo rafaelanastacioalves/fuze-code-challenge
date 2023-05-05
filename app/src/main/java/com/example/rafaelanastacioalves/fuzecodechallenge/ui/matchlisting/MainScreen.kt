@@ -23,7 +23,7 @@ import com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting.MatchI
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(viewModel: MainScreenViewModel, onNavigate: (Int) -> Unit) {
+fun MainScreen(viewModel: MainScreenViewModel, onNavigate: (Match) -> Unit) {
 
     Scaffold(
         topBar = {
@@ -60,7 +60,7 @@ fun MainScreen(viewModel: MainScreenViewModel, onNavigate: (Int) -> Unit) {
 }
 
 @Composable
-fun MatchListScreen( modifier: Modifier = Modifier, list: List<Match>, onNavigate: (Int) -> Unit) {
+fun MatchListScreen( modifier: Modifier = Modifier, list: List<Match>, onNavigate: (Match) -> Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -68,7 +68,7 @@ fun MatchListScreen( modifier: Modifier = Modifier, list: List<Match>, onNavigat
     ) {
         items(items = list) { match ->
             MatchItemList(match = match, modifier = Modifier.clickable {
-                onNavigate(match.id)
+                onNavigate(match)
             })
         }
     }
@@ -78,7 +78,7 @@ fun MatchListScreen( modifier: Modifier = Modifier, list: List<Match>, onNavigat
 @Composable
 fun PreviewMainScreen() {
     val respository = MainApplication().appRepository
-    val viewModel = MainScreenViewModel(MatchListingInteractor(respository))
+    val viewModel = MainScreenViewModel(MatchListingInteractor(respository), MatchDetailInteractor(respository))
 
     MainScreen(viewModel = viewModel, {})
 }

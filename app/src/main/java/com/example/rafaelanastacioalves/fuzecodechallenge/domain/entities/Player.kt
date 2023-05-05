@@ -2,17 +2,28 @@ package com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities
 
 import com.google.gson.annotations.SerializedName
 
+
 data class Player(
-    val assists: Int = 0,
-    val deaths: Int = 0,
-    @SerializedName("first_name") val firstName: String? = null,
-    val headshots: Int = 0,
-    @SerializedName("image_url") val imageUrl: String? = null,
-    val kills: Int = 0,
-    @SerializedName("last_name") val lastName: String? = null,
+    @SerializedName("age")
+    val age: Int? = null,
+    @SerializedName("birthday")
+    val birthday: String? = null,
+    @SerializedName("first_name")
+    val firstName: String? = null,
+    @SerializedName("id")
+    val id: Int? = null,
+    @SerializedName("image_url")
+    val imageUrl: String? = null,
+    @SerializedName("last_name")
+    val lastName: String? = null,
+    @SerializedName("modified_at")
+    val modifiedAt: String? = null,
+    @SerializedName("name")
     val name: String? = null,
+    @SerializedName("nationality")
     val nationality: String? = null,
-    @SerializedName("number_of_games") val numberOfGames: Int = 0,
-    @SerializedName("player_id") val playerId: Int = 0,
+    @SerializedName("role")
+    val role: Any? = null,
+    @SerializedName("slug")
     val slug: String? = null
 )

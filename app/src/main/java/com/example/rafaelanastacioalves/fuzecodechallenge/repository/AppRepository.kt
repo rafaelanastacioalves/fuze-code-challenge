@@ -1,5 +1,6 @@
 
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Match
+import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Team
 import com.example.rafaelanastacioalves.moby.domain.entities.Resource
 
 
@@ -8,7 +9,7 @@ class AppRepository(
 
     suspend fun getMatchList(): Resource<List<Match>> {
         return object : NetworkBoundResource<List<Match>, List<Match>>() {
-            override suspend fun fecthFromHttp(): List<Match>? {
+            override suspend fun fecthFromHttp(): List<Match> {
 
                 return apiClient.getMatchList()
             }
@@ -23,19 +24,20 @@ class AppRepository(
     }
     
 
-    suspend fun matchDetails(requestId: String): Resource<Match> {
-        return object : NetworkBoundResource<Match, Match>() {
-            override suspend fun fecthFromHttp(): Match? {
+    suspend fun matchDetails(requestId: String): Resource<List<Team>> {
+        return object : NetworkBoundResource<List<Team>, List<Team>>() {
+            override suspend fun fecthFromHttp(): List<Team> {
                 return apiClient.getMatchDetails(requestId)
             }
 
-            override suspend fun getFromDB(): Match? {
+            override suspend fun getFromDB():List<Team> {
                 TODO("Not yet implemented")
             }
 
-            override fun saveIntoDB(resultData: Match?) {
+            override fun saveIntoDB(resultData: List<Team>?) {
                 TODO("Not yet implemented")
             }
+
         }.fromHttpOnly()
     }
 }

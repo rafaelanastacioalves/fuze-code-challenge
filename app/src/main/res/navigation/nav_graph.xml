@@ -8,11 +8,7 @@
     <fragment
         android:id="@+id/entityDetailsFragment"
         android:name="com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchdetail.MatchDetailFragment"
-        android:label="EntityDetailsFragment" >
-        <argument android:name="ARG_ENTITY_ID"
-            app:argType="string"
-            app:nullable="true" />
-    </fragment>
+        android:label="EntityDetailsFragment" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting.HomeFragment"

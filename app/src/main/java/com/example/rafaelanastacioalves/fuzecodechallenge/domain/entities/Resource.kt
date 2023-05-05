@@ -3,7 +3,7 @@ package com.example.rafaelanastacioalves.moby.domain.entities
 open class Resource<T>(
     val status: Status = Status.LOADING,
     val data: T? = null,
-    var message: String) {
+    var message: String = "") {
 
     companion object Factory {
 
@@ -11,8 +11,8 @@ open class Resource<T>(
             return Resource(Status.SUCCESS,successData, "No error");
         }
 
-        fun <T> error(status: Status, data: T?, msg: String): Resource<T> {
-            return Resource(status, data, msg)
+        fun <T> error(status: Status, data: T? = null, message: String = ""): Resource<T> {
+            return Resource(status, data, message)
         }
 
         fun <T> loading(): Resource<T> {

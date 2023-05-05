@@ -1,4 +1,3 @@
-
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.*
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Match
@@ -15,12 +14,12 @@ import com.example.rafaelanastacioalves.moby.domain.interactors.Interactor
  */
 
 
-
-class MainScreenViewModel(val matchListingInteractor : Interactor<Resource<List<Match>>, MatchListingInteractor.RequestValues>) : ViewModel() {
-
-
-    val matchListLiveData  = loadDataIfNecessary().map {
-        when(it.status){
+class MainScreenViewModel(
+    val matchListingInteractor: Interactor<Resource<List<Match>>, MatchListingInteractor.RequestValues>,
+    val matchDetailInteractor: MatchDetailInteractor,
+) : ViewModel() {
+    val matchListLiveData = loadDataIfNecessary().map {
+        when (it.status) {
             Resource.Status.SUCCESS -> ViewState.Success(it.data!!)
             Resource.Status.INTERNAL_SERVER_ERROR -> ViewState.Error(it.message)
             Resource.Status.GENERIC_ERROR -> ViewState.Error(it.message)
@@ -37,17 +36,50 @@ class MainScreenViewModel(val matchListingInteractor : Interactor<Resource<List<
 
     }
 
+    private val _selecteMatchLivedata = MutableLiveData<Match?>(null)
+    val selecteMatchLiveDAta: LiveData<Match?> = _selecteMatchLivedata
 
-    fun loadDataIfNecessary() : LiveData<Resource<List<Match>>>{
-            return matchListingInteractor.execute(viewModelScope,null).asLiveData()
+    fun loadDataIfNecessary(): LiveData<Resource<List<Match>>> {
+        return matchListingInteractor.execute(viewModelScope, null).asLiveData()
+    }
+
+    fun setSelectedMatch(match: Match) {
+        _selecteMatchLivedata.postValue(match)
+    }
+
+    val matchDetails = loadData().map {
+        when (it.status) {
+            Resource.Status.SUCCESS -> ViewState.Success(it.data!!)
+            Resource.Status.INTERNAL_SERVER_ERROR -> ViewState.Error(it.message)
+            Resource.Status.GENERIC_ERROR -> ViewState.Error(it.message)
+            Resource.Status.LOADING -> ViewState.Loading
+        }
     }
 
 
+    fun loadData(): LiveData<Resource<Match>> {
+        return selecteMatchLiveDAta.switchMap {
+            it?.let {
+                matchDetailInteractor.execute(
+                    scope = viewModelScope,
+                    params = selecteMatchLiveDAta.value?.let {
+                        MatchDetailInteractor.RequestValues(it)
+                    }
+                ).asLiveData()
+            }
+        }
+
+    }
 }
 
 @Suppress("UNCHECKED_CAST")
-class MainScreenViewModelFactory(val matchListingInteractor: Interactor<Resource<List<Match>>, MatchListingInteractor.RequestValues>) : ViewModelProvider.NewInstanceFactory() {
+class MainScreenViewModelFactory(
+    private val matchListingInteractor: Interactor<Resource<List<Match>>, MatchListingInteractor.RequestValues>,
+    private val interactor: MatchDetailInteractor,
+) : ViewModelProvider.NewInstanceFactory() {
 
-    override fun <T : ViewModel> create(modelClass: Class<T>) = (MainScreenViewModel(matchListingInteractor) as T)
+
+    override fun <T : ViewModel> create(modelClass: Class<T>) =
+        (MainScreenViewModel(matchListingInteractor, interactor) as T)
 
 }

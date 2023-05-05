@@ -1,5 +1,6 @@
 package com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +26,7 @@ import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Oppone
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.OpponentDetails
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Player
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Serie
+import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Team
 import com.example.rafaelanastacioalves.fuzecodechallenge.utils.Utils
 
 @Composable
@@ -41,11 +43,15 @@ fun MatchItemList(modifier: Modifier = Modifier, match: Match) {
 
 @Composable
 fun ScheduledAtRepresentation(modifier: Modifier, match: Match) {
+    Log.d("Compose", "Composing ScheduledAtRepresentation")
+
     Text(modifier = modifier, text = match.beginAt.orEmpty())
 }
 
 @Composable
 fun LeagueAndSerieRepresentation(modifier: Modifier, match: Match) {
+    Log.d("Compose", "Composing League and Serie Representation")
+
     val league = match.league.name
     val serie = match.serie.name
     Text(modifier = modifier, text = "$league + $serie")
@@ -53,6 +59,7 @@ fun LeagueAndSerieRepresentation(modifier: Modifier, match: Match) {
 
 @Composable
 fun TeamRepresentation(modifier: Modifier, match: Match) {
+    Log.d("Compose", "Composing Team Representation")
     Row(modifier = modifier.clipToBounds()) {
         if (match.opponents.isEmpty().not()) {
             Team1Area(modifier, details = match.opponents.getOrNull(0)?.opponentDetails)
@@ -95,7 +102,10 @@ private fun CoreTeamImage(
     teamNumber: Int,
 ) {
     Column(modifier) {
-        if (details.imageUrl.isNullOrEmpty().not()) {
+        if (
+            false
+//            details.imageUrl.isNullOrEmpty().not()
+        ) {
             GlideImage(model = details.imageUrl, contentDescription = details.slug)
         } else {
             Image(
@@ -164,57 +174,64 @@ val sampleMatchDetails = Match(
             )
         )
     ),
-    players = listOf(
-        Player(
-            firstName = "Player N 1",
-            imageUrl = "",
-            name = "Nick Name 1"
+    teamList = listOf(
+        Team(
+            players = listOf(
+                Player(
+                    firstName = "Player N 1",
+                    imageUrl = "",
+                    name = "Nick Name 1"
+                ),
+                Player(
+                    firstName = "Player N 2",
+                    imageUrl = "",
+                    name = "Nick Name 2"
+                ),
+                Player(
+                    firstName = "Player N 3",
+                    imageUrl = "",
+                    name = "Nick Name 3"
+                ),
+                Player(
+                    firstName = "Player N 4",
+                    imageUrl = "",
+                    name = "Nick Name 4"
+                ),
+                Player(
+                    firstName = "Player N 5",
+                    imageUrl = "",
+                    name = "Nick Name 5"
+                )
+            )
         ),
-        Player(
-            firstName = "Player N 2",
-            imageUrl = "",
-            name = "Nick Name 2"
-        ),
-        Player(
-            firstName = "Player N 3",
-            imageUrl = "",
-            name = "Nick Name 3"
-        ),
-        Player(
-            firstName = "Player N 4",
-            imageUrl = "",
-            name = "Nick Name 4"
-        ),
-        Player(
-            firstName = "Player N 5",
-            imageUrl = "",
-            name = "Nick Name 5"
-        ),
-        Player(
-            firstName = "Player N 6",
-            imageUrl = "",
-            name = "Nick Name 6"
-        ),
-        Player(
-            firstName = "Player N 7",
-            imageUrl = "",
-            name = "Nick Name 7"
-        ),
-        Player(
-            firstName = "Player N 8",
-            imageUrl = "",
-            name = "Nick Name 8"
-        ),
-        Player(
-            firstName = "Player N 9",
-            imageUrl = "",
-            name = "Nick Name 9"
-        ),
-        Player(
-            firstName = "Player N 10",
-            imageUrl = "",
-            name = "Nick Name 10"
+        Team(
+            players = listOf(
+                Player(
+                    firstName = "Player N 6",
+                    imageUrl = "",
+                    name = "Nick Name 6"
+                ),
+                Player(
+                    firstName = "Player N 7",
+                    imageUrl = "",
+                    name = "Nick Name 7"
+                ),
+                Player(
+                    firstName = "Player N 8",
+                    imageUrl = "",
+                    name = "Nick Name 8"
+                ),
+                Player(
+                    firstName = "Player N 9",
+                    imageUrl = "",
+                    name = "Nick Name 9"
+                ),
+                Player(
+                    firstName = "Player N 10",
+                    imageUrl = "",
+                    name = "Nick Name 10"
+                )
+            )
         )
     )
-
 )

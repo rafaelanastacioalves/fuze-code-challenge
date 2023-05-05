@@ -57,6 +57,5 @@ import com.google.gson.annotations.SerializedName
     val results: List<Result> = listOf(),
     @SerializedName("streams_list")
     val streamsList: List<Stream> = listOf(),
-    @SerializedName("players")
-    val players: List<Player> = listOf()
+    var teamList: List<Team>? = null
 )

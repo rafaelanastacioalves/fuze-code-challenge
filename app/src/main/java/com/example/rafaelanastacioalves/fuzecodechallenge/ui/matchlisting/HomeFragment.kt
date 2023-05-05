@@ -1,19 +1,26 @@
 package com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting
+
 import MatchListingInteractor
 import MainScreen
 import MainScreenViewModel
 import MainScreenViewModelFactory
+import MatchDetailInteractor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.rafaelanastacioalves.fuzecodechallenge.application.MainApplication
+import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Match
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.RafaelanastacioalvesfuzechallengeTheme
 
 /**
@@ -23,9 +30,8 @@ import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.Rafaelanastac
  */
 class HomeFragment : Fragment() {
 
-    private val mMainScreenViewModel: MainScreenViewModel by viewModels<MainScreenViewModel> {
-        MainScreenViewModelFactory(MatchListingInteractor((requireActivity().application as MainApplication).appRepository))
-    }
+    private val mMainScreenViewModel: MainScreenViewModel by activityViewModels()
+
 
 
 
@@ -43,15 +49,11 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun goToDetailsScreen(detailId: Int) {
-
+    private fun goToDetailsScreen(match: Match) {
+        mMainScreenViewModel.setSelectedMatch(match)
         val direction =
-            HomeFragmentDirections.actionHomeFragmentToEntityDetailsFragment(detailId.toString())
+            HomeFragmentDirections.actionHomeFragmentToEntityDetailsFragment()
         findNavController().navigate(direction)
-    }
-
-    private fun loadData() {
-        mMainScreenViewModel.loadDataIfNecessary()
     }
 
 
