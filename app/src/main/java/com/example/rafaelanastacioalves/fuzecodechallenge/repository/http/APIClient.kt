@@ -1,8 +1,6 @@
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Match
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Team
 import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface APIClient {

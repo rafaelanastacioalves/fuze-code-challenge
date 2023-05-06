@@ -1,37 +1,40 @@
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.*
-import androidx.compose.material.*
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.contentColorFor
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.example.rafaelanastacioalves.fuzecodechallenge.R
 import com.example.rafaelanastacioalves.fuzecodechallenge.application.MainApplication
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Match
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.ViewState
+import com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting.AppBar
+import com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting.LoadingScreen
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting.MatchItemList
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(viewModel: MainScreenViewModel, onNavigate: (Match) -> Unit) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = stringResource(id = R.string.matches))
-                }
-            )
+            AppBar() {
+                androidx.compose.material.Text(
+                    text = stringResource(id = R.string.matches),
+                    fontSize = 32.sp,
+                )
+            }
         }
     ) {
         val viewState = viewModel.matchListLiveData.observeAsState()
@@ -47,10 +50,7 @@ fun MainScreen(viewModel: MainScreenViewModel, onNavigate: (Match) -> Unit) {
                 }
             }
             is ViewState.Loading -> {
-                Surface(modifier = Modifier.padding(it)){
-                    Text(text = stringResource(id = R.string.loading))
-
-                }
+                LoadingScreen()
             }
 
         }
@@ -61,15 +61,17 @@ fun MainScreen(viewModel: MainScreenViewModel, onNavigate: (Match) -> Unit) {
 
 @Composable
 fun MatchListScreen( modifier: Modifier = Modifier, list: List<Match>, onNavigate: (Match) -> Unit) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .testTag("list")
-    ) {
-        items(items = list) { match ->
-            MatchItemList(match = match, modifier = Modifier.clickable {
-                onNavigate(match)
-            })
+    Surface(modifier = modifier, color = MaterialTheme.colors.primary, contentColor = contentColorFor(MaterialTheme.colors.onPrimary)){
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize()
+                .testTag("list")
+        ) {
+            items(items = list) { match ->
+                MatchItemList(match = match, modifier = modifier.clickable {
+                    onNavigate(match)
+                })
+            }
         }
     }
 }

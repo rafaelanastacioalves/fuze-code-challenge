@@ -1,14 +1,10 @@
 package com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting
 
-import MainScreenViewModel
 import MainScreenViewModelFactory
 import MatchDetailInteractor
 import MatchListingInteractor
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.HasDefaultViewModelProviderFactory
 import androidx.lifecycle.ViewModelProvider
 import com.example.rafaelanastacioalves.fuzecodechallenge.R

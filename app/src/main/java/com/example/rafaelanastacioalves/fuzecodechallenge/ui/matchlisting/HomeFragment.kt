@@ -1,25 +1,15 @@
 package com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting
 
-import MatchListingInteractor
 import MainScreen
 import MainScreenViewModel
-import MainScreenViewModelFactory
-import MatchDetailInteractor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
-import androidx.navigation.NavDirections
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.rafaelanastacioalves.fuzecodechallenge.application.MainApplication
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Match
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.RafaelanastacioalvesfuzechallengeTheme
 
@@ -42,7 +32,7 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         return ComposeView(requireContext()).apply {
             setContent {
-                RafaelanastacioalvesfuzechallengeTheme {
+                RafaelanastacioalvesfuzechallengeTheme(darkTheme = true, dynamicColor = false) {
                     MainScreen(mMainScreenViewModel, { detailId -> goToDetailsScreen(detailId) })
                 }
             }

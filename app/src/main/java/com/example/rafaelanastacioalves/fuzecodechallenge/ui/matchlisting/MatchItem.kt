@@ -2,23 +2,41 @@ package com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Divider
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
+import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.rafaelanastacioalves.fuzecodechallenge.R
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.League
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Match
@@ -27,11 +45,18 @@ import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Oppone
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Player
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Serie
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Team
+import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.Grey
+import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.RafaelanastacioalvesfuzechallengeTheme
+import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.Red
 import com.example.rafaelanastacioalves.fuzecodechallenge.utils.Utils
 
 @Composable
 fun MatchItemList(modifier: Modifier = Modifier, match: Match) {
-    Surface(modifier = modifier) {
+    Card(
+        modifier = modifier.padding(24.dp),
+        backgroundColor = MaterialTheme.colors.secondary,
+        contentColor = MaterialTheme.colors.onPrimary
+    ) {
         Column(modifier) {
             ScheduledAtRepresentation(modifier, match = match)
             TeamRepresentation(modifier = modifier, match)
@@ -44,8 +69,25 @@ fun MatchItemList(modifier: Modifier = Modifier, match: Match) {
 @Composable
 fun ScheduledAtRepresentation(modifier: Modifier, match: Match) {
     Log.d("Compose", "Composing ScheduledAtRepresentation")
-
-    Text(modifier = modifier, text = match.beginAt.orEmpty())
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp),
+        horizontalArrangement = Arrangement.End
+    ) {
+        Surface(
+            modifier = modifier, shape = RoundedCornerShape(bottomStart = 16.dp), color = Grey
+        ) {
+            Text(
+                modifier = modifier.padding(8.dp),
+                text = Utils.formatDateTime(match.beginAt.orEmpty()),
+                textAlign = TextAlign.Center,
+                fontSize = 8.sp,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1
+            )
+        }
+    }
 }
 
 @Composable
@@ -54,25 +96,45 @@ fun LeagueAndSerieRepresentation(modifier: Modifier, match: Match) {
 
     val league = match.league.name
     val serie = match.serie.name
-    Text(modifier = modifier, text = "$league + $serie")
+    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
+        Image(
+            modifier = Modifier
+                .size(16.dp)
+                .clip(CircleShape)
+                .padding(start = 16.dp),
+            painter = painterResource(id = R.mipmap.placeholder),
+            contentScale = ContentScale.Crop,
+            contentDescription = null
+        )
+        Text(
+            modifier = modifier.padding(start = 8.dp, bottom = 12.dp, top = 12.dp),
+            text = "$league + $serie",
+            fontSize = 8.sp
+        )
+    }
 }
 
 @Composable
 fun TeamRepresentation(modifier: Modifier, match: Match) {
     Log.d("Compose", "Composing Team Representation")
-    Row(modifier = modifier.clipToBounds()) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Min),
+        horizontalArrangement = Arrangement.Center
+    ) {
         if (match.opponents.isEmpty().not()) {
             Team1Area(modifier, details = match.opponents.getOrNull(0)?.opponentDetails)
-            Text(modifier = modifier, text = "VS")
+            Column(modifier = modifier.fillMaxHeight(), verticalArrangement = Arrangement.Center) {
+                Text(modifier = modifier.alpha(0.5f), text = "VS", fontSize = 12.sp)
+            }
             Team2Area(modifier, details = match.opponents.getOrNull(1)?.opponentDetails)
         } else {
-            Text(modifier = modifier, text = "Opponents not defined")
+            Text(modifier = modifier, text = "Opponents not defined", fontSize = 8.sp)
         }
-
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 private fun Team2Area(modifier: Modifier, details: OpponentDetails?) {
     if (details != null) {
@@ -84,7 +146,6 @@ private fun Team2Area(modifier: Modifier, details: OpponentDetails?) {
 
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 private fun Team1Area(modifier: Modifier, details: OpponentDetails?) {
     if (details != null) {
@@ -95,18 +156,17 @@ private fun Team1Area(modifier: Modifier, details: OpponentDetails?) {
 }
 
 @Composable
-@OptIn(ExperimentalGlideComposeApi::class)
 private fun CoreTeamImage(
     modifier: Modifier,
     details: OpponentDetails,
     teamNumber: Int,
 ) {
-    Column(modifier) {
+    Column(modifier.padding(bottom = 20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         if (
             false
 //            details.imageUrl.isNullOrEmpty().not()
         ) {
-            GlideImage(model = details.imageUrl, contentDescription = details.slug)
+            AsyncImage(model = details.imageUrl, contentDescription = details.slug)
         } else {
             Image(
                 modifier = Modifier
@@ -117,7 +177,12 @@ private fun CoreTeamImage(
                 contentDescription = null
             )
         }
-        Text(modifier = modifier, text = "Time $teamNumber")
+        Text(
+            modifier = modifier.padding(top = 12.dp),
+            text = "Time $teamNumber",
+            fontSize = 10.sp,
+            color = MaterialTheme.colors.onPrimary
+        )
     }
 }
 
@@ -125,12 +190,14 @@ private fun CoreTeamImage(
 @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
 @Composable
 fun MatchItemListPreview() {
-    MatchItemList(match = sampleMatch)
+    RafaelanastacioalvesfuzechallengeTheme(darkTheme = false, dynamicColor = false) {
+        MatchItemList(match = sampleMatch)
+    }
 }
 
 val sampleMatch = Match(
     id = 1,
-    beginAt = Utils.formatDateTime("2023-03-01T13:00:00Z"),
+    beginAt = "2023-03-01T13:00:00Z",
     name = "Match Name",
     league = League(
         name = "League Name"
@@ -154,7 +221,7 @@ val sampleMatch = Match(
 
 val sampleMatchDetails = Match(
     id = 1,
-    beginAt = Utils.formatDateTime("2023-03-01T13:00:00Z"),
+    beginAt = "2023-03-01T13:00:00Z",
     name = "Match Name",
     league = League(
         name = "League Name"

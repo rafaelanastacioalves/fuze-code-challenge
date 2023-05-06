@@ -26,7 +26,7 @@ class MatchDetailFragment : Fragment(), View.OnClickListener {
         mMainScreenViewModel.loadData()
         return ComposeView(requireContext()).apply {
             setContent {
-                RafaelanastacioalvesfuzechallengeTheme {
+                RafaelanastacioalvesfuzechallengeTheme(darkTheme = true, dynamicColor = false) {
                     MatchDetail(mMainScreenViewModel) { goBack() }
                 }
             }
