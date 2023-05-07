@@ -22,6 +22,8 @@ import com.example.rafaelanastacioalves.fuzecodechallenge.ui.ViewState
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting.AppBar
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting.LoadingScreen
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting.MatchItemList
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 
 @Composable
@@ -41,7 +43,9 @@ fun MainScreen(viewModel: MainScreenViewModel, onNavigate: (Match) -> Unit) {
         when(viewState.value) {
             is ViewState.Success -> {
                 val observableListState = viewModel.observableListState.observeAsState()
-                MatchListScreen(list = observableListState.value.orEmpty(), onNavigate = onNavigate)
+                if(observableListState.value.isNullOrEmpty().not()) {
+                    MatchListScreen(list = observableListState.value.orEmpty(), onNavigate = onNavigate, onRefresh = {viewModel.refreshMatchList()})
+                }
             }
             is ViewState.Error, null -> {
                 Surface(modifier = Modifier.padding(it)){
@@ -60,17 +64,26 @@ fun MainScreen(viewModel: MainScreenViewModel, onNavigate: (Match) -> Unit) {
 }
 
 @Composable
-fun MatchListScreen( modifier: Modifier = Modifier, list: List<Match>, onNavigate: (Match) -> Unit) {
-    Surface(modifier = modifier, color = MaterialTheme.colors.primary, contentColor = contentColorFor(MaterialTheme.colors.onPrimary)){
-        LazyColumn(
-            modifier = modifier
-                .fillMaxSize()
-                .testTag("list")
+fun MatchListScreen( modifier: Modifier = Modifier, list: List<Match>, onNavigate: (Match) -> Unit, onRefresh: () -> Unit) {
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing = false),
+        onRefresh = onRefresh
+    ) {
+        Surface(
+            modifier = modifier,
+            color = MaterialTheme.colors.primary,
+            contentColor = contentColorFor(MaterialTheme.colors.onPrimary)
         ) {
-            items(items = list) { match ->
-                MatchItemList(match = match, modifier = modifier.clickable {
-                    onNavigate(match)
-                })
+            LazyColumn(
+                modifier = modifier
+                    .fillMaxSize()
+                    .testTag("list")
+            ) {
+                items(items = list) { match ->
+                    MatchItemList(match = match, modifier = modifier.clickable {
+                        onNavigate(match)
+                    })
+                }
             }
         }
     }

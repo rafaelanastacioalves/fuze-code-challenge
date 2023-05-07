@@ -1,9 +1,13 @@
+import android.annotation.SuppressLint
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.*
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Match
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.ViewState
 import com.example.rafaelanastacioalves.moby.domain.entities.Resource
 import com.example.rafaelanastacioalves.moby.domain.interactors.Interactor
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 
 /**
@@ -18,15 +22,19 @@ class MainScreenViewModel(
     val matchListingInteractor: Interactor<Resource<List<Match>>, MatchListingInteractor.RequestValues>,
     val matchDetailInteractor: MatchDetailInteractor,
 ) : ViewModel() {
-    val matchListLiveData = loadDataIfNecessary().map {
+
+    val _matchListLiveData: MutableLiveData<ViewState<List<Match>>> = loadMatchList().map {
+        toViewState(it)
+    } as MutableLiveData<ViewState<List<Match>>>
+
+    val matchListLiveData = _matchListLiveData
+    private fun toViewState(it: @JvmSuppressWildcards Resource<List<Match>>) =
         when (it.status) {
             Resource.Status.SUCCESS -> ViewState.Success(it.data!!)
             Resource.Status.INTERNAL_SERVER_ERROR -> ViewState.Error(it.message)
             Resource.Status.GENERIC_ERROR -> ViewState.Error(it.message)
             Resource.Status.LOADING -> ViewState.Loading
         }
-
-    }
 
     val observableListState = matchListLiveData.map { state ->
         when (state) {
@@ -39,15 +47,22 @@ class MainScreenViewModel(
     private val _selecteMatchLivedata = MutableLiveData<Match?>(null)
     val selecteMatchLiveDAta: LiveData<Match?> = _selecteMatchLivedata
 
-    fun loadDataIfNecessary(): LiveData<Resource<List<Match>>> {
+    fun loadMatchList(): LiveData<Resource<List<Match>>> {
         return matchListingInteractor.execute(viewModelScope, null).asLiveData()
+    }
+
+    fun refreshMatchList() {
+        matchListingInteractor.execute(viewModelScope, null).map {
+            _matchListLiveData.postValue(toViewState(it))
+        }.launchIn(viewModelScope)
+
     }
 
     fun setSelectedMatch(match: Match) {
         _selecteMatchLivedata.postValue(match)
     }
 
-    val matchDetails = loadData().map {
+    val matchDetails = loadMatchDetail().map {
         when (it.status) {
             Resource.Status.SUCCESS -> ViewState.Success(it.data!!)
             Resource.Status.INTERNAL_SERVER_ERROR -> ViewState.Error(it.message)
@@ -57,7 +72,7 @@ class MainScreenViewModel(
     }
 
 
-    fun loadData(): LiveData<Resource<Match>> {
+    fun loadMatchDetail(): LiveData<Resource<Match>> {
         return selecteMatchLiveDAta.switchMap {
             it?.let {
                 matchDetailInteractor.execute(

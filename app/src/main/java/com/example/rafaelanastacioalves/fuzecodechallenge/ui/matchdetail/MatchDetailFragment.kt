@@ -23,7 +23,7 @@ class MatchDetailFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        mMainScreenViewModel.loadData()
+        mMainScreenViewModel.loadMatchDetail()
         return ComposeView(requireContext()).apply {
             setContent {
                 RafaelanastacioalvesfuzechallengeTheme(darkTheme = true, dynamicColor = false) {
