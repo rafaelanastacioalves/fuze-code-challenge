@@ -1,6 +1,7 @@
 package com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme
 
 import androidx.compose.ui.graphics.Color
+import android.graphics.Color as AndroidColor
 
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
@@ -14,5 +15,6 @@ val HardDark = Color(0xFF252525)
 val MediumDark = Color(0xFF272639)
 val Red = Color(0xFFF42A35)
 val Grey = Color(0x33FAFAFA)
-
 val DarkGrey = Color(0xFF6C6B7E)
+
+
