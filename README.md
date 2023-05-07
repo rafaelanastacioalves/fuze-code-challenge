@@ -27,9 +27,9 @@ I used the following libraries and solutions:
 ## Optionals items implemented
 
 - **MVVM Architecture**
-- 
+ 
 - **Reactive Programming (Coroutines with Flow and Livedata)**
-- 
+
 - **Responsiveness**
 
 ## What was not implemented
