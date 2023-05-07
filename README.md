@@ -3,15 +3,13 @@
 ![listing screen](https://user-images.githubusercontent.com/5789073/236656762-68a9e5f3-2691-45d5-8639-092a395e4ca5.png) ![detail screen](https://user-images.githubusercontent.com/5789073/236656800-9bc878df-0829-4659-966c-ac2bbb8aba9b.png)
 ## General Description
 
-**Architecture**: I used the MVVM (Model-View-ViewModel) architecture. I used interactors as an example to include some business logic rules.
+**Architecture**: I used the MVVM (Model-View-ViewModel) architecture. I used interactors as an example to include some business logic rules. As mentioned in "Not Implemented Section", I couldnt' implement local storage (with SQLite or Room solutions).
 
 **Repository**: In the Model layer, I abstracted a repository that provides the necessary data to the ViewModel without the other parts knowing how this data was obtained. The `NetworkBoundResource` class is responsible for the algorithm to obtain the data (allows obtaining data from remote and/or local storage).
 
+**Fetching data mechanisms**: In some cases, I decided to fetch data from the repository and apply some rules in interactors (like adding the data about teams and players into the current "match" being used for detailing). 
 
-**Fetching data mechanisms**: In some cases, I decided to fetch data from the repository and apply some rules in interactors (like adding the data about teams and players into the current "match" being used for detailing)
-
-
-![Architecture Diagram](captures/android_arch.png)
+![1_-yY0l4XD3kLcZz0rO1sfRA](https://user-images.githubusercontent.com/5789073/236658341-ea2ce7aa-3043-4510-98b9-2907ce03c500.png)
 
 ## Technical Description
 
