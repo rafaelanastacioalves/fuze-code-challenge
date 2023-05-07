@@ -2,7 +2,6 @@ package com.example.rafaelanastacioalves.fuzecodechallenge.ui.matchlisting
 
 import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -12,8 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -26,9 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -47,7 +41,6 @@ import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Serie
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Team
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.Grey
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.RafaelanastacioalvesfuzechallengeTheme
-import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.Red
 import com.example.rafaelanastacioalves.fuzecodechallenge.utils.Utils
 
 @Composable
@@ -60,7 +53,7 @@ fun MatchItemList(modifier: Modifier = Modifier, match: Match) {
         Column(modifier) {
             ScheduledAtRepresentation(modifier, match = match)
             TeamRepresentation(modifier = modifier, match)
-            Divider()
+            Divider(color = MaterialTheme.colors.onPrimary)
             LeagueAndSerieRepresentation(modifier = modifier, match = match)
         }
     }
@@ -125,7 +118,7 @@ fun TeamRepresentation(modifier: Modifier, match: Match) {
     ) {
         if (match.opponents.isEmpty().not()) {
             Team1Area(modifier, details = match.opponents.getOrNull(0)?.opponentDetails)
-            Column(modifier = modifier.fillMaxHeight(), verticalArrangement = Arrangement.Center) {
+            Column(modifier = modifier.fillMaxHeight().padding(horizontal = 20.dp), verticalArrangement = Arrangement.Center) {
                 Text(modifier = modifier.alpha(0.5f), text = "VS", fontSize = 12.sp)
             }
             Team2Area(modifier, details = match.opponents.getOrNull(1)?.opponentDetails)
@@ -137,51 +130,38 @@ fun TeamRepresentation(modifier: Modifier, match: Match) {
 
 @Composable
 private fun Team2Area(modifier: Modifier, details: OpponentDetails?) {
-    if (details != null) {
-        CoreTeamImage(modifier = modifier, details = details, teamNumber = 2)
-    } else {
-        Text(modifier = modifier, text = "Opponent not defined")
-    }
+        CoreTeamArea(modifier = modifier, details = details, teamNumber = 2)
 
 
 }
 
 @Composable
 private fun Team1Area(modifier: Modifier, details: OpponentDetails?) {
-    if (details != null) {
-        CoreTeamImage(modifier, details, teamNumber = 1)
-    } else {
-        Text(modifier = modifier, text = "Opponent not defined")
-    }
+            CoreTeamArea(modifier, details, teamNumber = 1)
+
 }
 
 @Composable
-private fun CoreTeamImage(
+private fun CoreTeamArea(
     modifier: Modifier,
-    details: OpponentDetails,
+    details: OpponentDetails?,
     teamNumber: Int,
 ) {
     Column(modifier.padding(bottom = 20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        if (
-            false
-//            details.imageUrl.isNullOrEmpty().not()
-        ) {
-            AsyncImage(model = details.imageUrl, contentDescription = details.slug)
-        } else {
-            Image(
-                modifier = Modifier
-                    .size(88.dp)
-                    .clip(CircleShape),
-                painter = painterResource(id = R.mipmap.placeholder),
-                contentScale = ContentScale.Crop,
-                contentDescription = null
-            )
-        }
+        AsyncImage(
+            modifier = modifier.size(60.dp),
+            contentScale = ContentScale.Fit,
+            model = details?.imageUrl,
+            contentDescription = details?.slug,
+            placeholder = painterResource(id = R.drawable.team_logo),
+            error = painterResource(id = R.drawable.team_logo)
+        )
         Text(
-            modifier = modifier.padding(top = 12.dp),
-            text = "Time $teamNumber",
-            fontSize = 10.sp,
-            color = MaterialTheme.colors.onPrimary
+            modifier = modifier,
+            text = details?.name ?: "XXX",
+            fontSize = 12.sp,
+            color = MaterialTheme.colors.onPrimary,
+            maxLines = 1
         )
     }
 }

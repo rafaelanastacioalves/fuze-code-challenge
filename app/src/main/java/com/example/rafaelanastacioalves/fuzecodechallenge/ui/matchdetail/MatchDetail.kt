@@ -36,6 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.rafaelanastacioalves.fuzecodechallenge.R
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Match
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Player
@@ -97,11 +98,11 @@ fun MatchDetail(viewModel: MainScreenViewModel, goBack: () -> Unit) {
 @Composable
 private fun MatchDetail(modifier: Modifier, match: Match) {
     Surface(modifier = Modifier) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            TeamRepresentation(modifier = modifier.padding(horizontal = 16.dp), match = match)
+        Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            TeamRepresentation(modifier = modifier.padding(horizontal = 16.dp, vertical = 20.dp), match = match)
             Text(
                 modifier = modifier
-                    .padding(8.dp)
+                    .padding(bottom = 24.dp)
                     .fillMaxWidth(),
                 text = Utils.formatDateTime(match.beginAt.orEmpty()),
                 textAlign = TextAlign.Center,
@@ -109,26 +110,34 @@ private fun MatchDetail(modifier: Modifier, match: Match) {
                 fontSize = 12.sp,
                 maxLines = 1
             )
-            Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                LazyColumn(
-                    modifier.weight(0.5f),
-                    horizontalAlignment = Alignment.End,
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    items(match.teamList!![0].players!!) { item ->
-                        PlayerItemInfoLeft(modifier = modifier, item)
+            Opponents(modifier, match)
+        }
+    }
+}
 
-                    }
-                }
-                Spacer(modifier.width(12.dp))
-                LazyColumn(
-                    modifier.weight(0.5f),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    items(match.teamList!![1].players!!) { item ->
-                        PlayerItemInfoRight(modifier = modifier, item)
-                    }
-                }
+@Composable
+private fun Opponents(
+    modifier: Modifier,
+    match: Match,
+) {
+    Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+        LazyColumn(
+            modifier.weight(0.5f),
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(match.teamList!![0].players!!) { item ->
+                PlayerItemInfoLeft(modifier = modifier, item)
+
+            }
+        }
+        Spacer(modifier.width(12.dp))
+        LazyColumn(
+            modifier.weight(0.5f),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(match.teamList!![1].players!!) { item ->
+                PlayerItemInfoRight(modifier = modifier, item)
             }
         }
     }
@@ -138,22 +147,22 @@ private fun MatchDetail(modifier: Modifier, match: Match) {
 fun PlayerItemInfoRight(modifier: Modifier, player: Player) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(bottom = 8.dp),
+            .fillMaxWidth(),
         backgroundColor = MaterialTheme.colors.secondary,
         contentColor = MaterialTheme.colors.onPrimary,
         shape = RoundedCornerShape(topStart = 12.dp, bottomStart = 12.dp)
     ) {
         Row(
-            modifier = modifier
+            modifier = modifier.padding(start = 12.dp, bottom = 8.dp, top = 8.dp),
         ) {
-            Image(
-                modifier = modifier
-                    .size(48.dp)
-                    .clip(CircleShape),
-                painter = painterResource(id = R.mipmap.placeholder),
+
+            AsyncImage(
+                modifier = modifier.size(48.dp).clip(CircleShape),
                 contentScale = ContentScale.Crop,
-                contentDescription = null
+                model = player.imageUrl,
+                contentDescription = player.slug,
+                placeholder = painterResource(id = R.drawable.team_logo),
+                error = painterResource(id = R.drawable.team_logo)
             )
             Column(modifier = modifier.padding(start = 16.dp)) {
                 Text(
@@ -188,15 +197,14 @@ fun PlayerItemInfoRight(modifier: Modifier, player: Player) {
 fun PlayerItemInfoLeft(modifier: Modifier = Modifier, player: Player) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(end = 12.dp, bottom = 8.dp),
+            .fillMaxWidth(),
         backgroundColor = MaterialTheme.colors.secondary,
         contentColor = MaterialTheme.colors.onPrimary,
         shape = RoundedCornerShape(topEnd = 12.dp, bottomEnd = 12.dp)
 
     ) {
         Row(
-            modifier = modifier,
+            modifier = modifier.padding(end = 12.dp, bottom = 8.dp, top = 8.dp),
             horizontalArrangement = Arrangement.End
         ) {
             Column(
@@ -219,16 +227,13 @@ fun PlayerItemInfoLeft(modifier: Modifier = Modifier, player: Player) {
                     color = Color.DarkGray
                 )
             }
-            //        player.imageUrl?.let {
-            //            GlideImage(model = player.imageUrl, contentDescription = player.slug)
-            //        } ?:
-            Image(
-                modifier = modifier
-                    .size(48.dp)
-                    .clip(CircleShape),
-                painter = painterResource(id = R.mipmap.placeholder),
+            AsyncImage(
+                modifier = modifier.size(48.dp).clip(CircleShape),
                 contentScale = ContentScale.Crop,
-                contentDescription = null
+                model = player.imageUrl,
+                contentDescription = player.slug,
+                placeholder = painterResource(id = R.drawable.team_logo),
+                error = painterResource(id = R.drawable.team_logo)
             )
 
         }
