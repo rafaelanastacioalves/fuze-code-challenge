@@ -13,8 +13,6 @@
 
 ## Technical Description
 
-Sure, here's the text in English with the requested changes:
-
 I used the following libraries and solutions:
 
 - **JetPack Compose**: Library to implement views in Android with a better State paradigm approach. JetPack Compose simplifies and accelerates UI development on Android with less code, powerful tools, and intuitive Kotlin APIs. [Reference: https://developer.android.com/jetpack/compose]
