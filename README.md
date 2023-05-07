@@ -28,9 +28,9 @@ I used the following libraries and solutions:
 - **Flow**: Used for emiting asynchrounous data to live data. Flow is a type of cold stream that can emit multiple values asynchronously, without blocking the main thread and can be cancelled. Flow is built on top of coroutines and supports reactive patterns. [Reference: https://developer.android.com/kotlin/flow]
 ## Optionals items implemented
 
-**MVVM Architecture**
-**Reactive Programming (Coroutines with Flow and Livedata)**
-**Responsiveness**
+- **MVVM Architecture**
+- **Reactive Programming (Coroutines with Flow and Livedata)**
+- **Responsiveness**
 
 ## What was not implemented
 
