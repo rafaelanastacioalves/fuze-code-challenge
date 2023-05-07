@@ -26,6 +26,11 @@ I used the following libraries and solutions:
 - **Android Architecture Components**: Used for implementing the MVVM architecture. Used LiveData, ViewModel, among others. Android Architecture Components are a collection of libraries that help you design robust, testable, and maintainable apps. They provide common patterns and best practices for app architecture, data persistence, lifecycle management, and more. [Reference: https://developer.android.com/topic/libraries/architecture]
 
 - **Flow**: Used for emiting asynchrounous data to live data. Flow is a type of cold stream that can emit multiple values asynchronously, without blocking the main thread and can be cancelled. Flow is built on top of coroutines and supports reactive patterns. [Reference: https://developer.android.com/kotlin/flow]
+## Optionals items implemented
+
+**MVVM Architecture**
+**Reactive Programming (Coroutines with Flow and Livedata)**
+**Responsiveness**
 
 ## What was not implemented
 
@@ -37,8 +42,9 @@ I used the following libraries and solutions:
 
 **Offline Storage**: I first started doing abstraction to include local storage with Room, I would take more time due to relational data complexity.
 
+
 ## How to run
 
-The app can be built like any other app. Just important to remember to use Java 11 to build the app.
+The app can be built like any other app. Just important to remember to use Java 17 to build the app.
 The same applies to tests.
 `
