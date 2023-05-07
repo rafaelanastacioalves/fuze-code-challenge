@@ -29,19 +29,17 @@ I used the following libraries and solutions:
 ## Optionals items implemented
 
 - **MVVM Architecture**
+- 
 - **Reactive Programming (Coroutines with Flow and Livedata)**
+- 
 - **Responsiveness**
 
 ## What was not implemented
 
-**Mechanism to load all posts from API**: This mechanism occurs, but we do not have control over when to force that. The implemented mechanism fetches from the API if there is no local data, for the sake of simplicity.
-
-**Unit Tests**: I know how to make Unit Tests, but didn't have time
-
-**Pagination Support**
-
-**Offline Storage**: I first started doing abstraction to include local storage with Room, I would take more time due to relational data complexity.
-
+- **Mechanism to load all posts from API**: This mechanism occurs, but we do not have control over when to force that. The implemented mechanism fetches from the API if there is no local data, for the sake of simplicity.
+- **Unit Tests**: I know how to make Unit Tests, but didn't have time
+- **Pagination Support**
+- **Offline Storage**: I first started doing abstraction to include local storage with Room, I would take more time due to relational data complexity.
 
 ## How to run
 
