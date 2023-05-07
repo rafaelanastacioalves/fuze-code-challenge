@@ -44,4 +44,3 @@ I used the following libraries and solutions:
 
 The app can be built like any other app. Just important to remember to use Java 17 to build the app.
 The same applies to tests.
-`
