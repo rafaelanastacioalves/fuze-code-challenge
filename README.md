@@ -24,6 +24,9 @@ I used the following libraries and solutions:
 - **Android Architecture Components**: Used for implementing the MVVM architecture. Used LiveData, ViewModel, among others. Android Architecture Components are a collection of libraries that help you design robust, testable, and maintainable apps. They provide common patterns and best practices for app architecture, data persistence, lifecycle management, and more. [Reference: https://developer.android.com/topic/libraries/architecture]
 
 - **Flow**: Used for emiting asynchrounous data to live data. Flow is a type of cold stream that can emit multiple values asynchronously, without blocking the main thread and can be cancelled. Flow is built on top of coroutines and supports reactive patterns. [Reference: https://developer.android.com/kotlin/flow]
+
+- **Navigation Components**: A library used to implement navigation and deep linking in Android apps. It provides a set of tools and APIs to make it easier to navigate between different screens or destinations in your app. [Reference: https://developer.android.com/guide/navigation]
+
 ## Optionals items implemented
 
 - **MVVM Architecture**
