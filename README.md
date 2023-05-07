@@ -38,6 +38,7 @@ I used the following libraries and solutions:
 - **Unit Tests**: I know how to make Unit Tests, but didn't have time
 - **Pagination Support**
 - **Offline Storage**: I first started doing abstraction to include local storage with Room, I would take more time due to relational data complexity.
+- Pixel perfect views: due to the recent learning of JetPack Compose, it took me more time to learn and implement this new resource so it lacked in some fidelity in design. I'm sorry about that.
 
 ## How to run
 
