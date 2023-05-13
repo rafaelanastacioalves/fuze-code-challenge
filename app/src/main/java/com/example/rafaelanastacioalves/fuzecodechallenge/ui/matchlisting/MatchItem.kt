@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -32,6 +33,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.size.Dimension
+import coil.size.Size
 import com.example.rafaelanastacioalves.fuzecodechallenge.R
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.League
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Match
@@ -93,15 +97,17 @@ fun LeagueAndSerieRepresentation(modifier: Modifier, match: Match) {
 
     val league = match.league.name
     val serie = match.serie.name
-    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
-        Image(
-            modifier = Modifier
-                .size(16.dp)
-                .clip(CircleShape)
-                .padding(start = 16.dp),
-            painter = painterResource(id = R.mipmap.placeholder),
-            contentScale = ContentScale.Crop,
-            contentDescription = null
+    Row(modifier = modifier.padding(start = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+        AsyncImage(
+            modifier = modifier.size(16.dp),
+            contentScale = ContentScale.Fit,
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(match.league.imageUrl)
+                .crossfade(true)
+                .build(),
+            contentDescription = match.league.slug,
+            placeholder = painterResource(id = R.drawable.team_logo),
+            error = painterResource(id = R.drawable.team_logo)
         )
         Text(
             modifier = modifier.padding(start = 8.dp, bottom = 12.dp, top = 12.dp),
