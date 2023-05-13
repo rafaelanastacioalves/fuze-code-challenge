@@ -48,6 +48,7 @@ import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.Grey
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.RafaelanastacioalvesfuzechallengeTheme
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.Red
 import com.example.rafaelanastacioalves.fuzecodechallenge.utils.Utils
+import com.example.rafaelanastacioalves.fuzecodechallenge.utils.Utils.toThumbUrl
 
 @Composable
 fun MatchItemList(modifier: Modifier = Modifier, match: Match) {
@@ -102,7 +103,7 @@ fun LeagueAndSerieRepresentation(modifier: Modifier, match: Match) {
             modifier = modifier.size(16.dp),
             contentScale = ContentScale.Fit,
             model = ImageRequest.Builder(LocalContext.current)
-                .data(match.league.imageUrl)
+                .data(match.league.imageUrl?.toThumbUrl())
                 .crossfade(true)
                 .build(),
             contentDescription = match.league.slug,
@@ -163,7 +164,7 @@ private fun CoreTeamArea(
         AsyncImage(
             modifier = modifier.size(60.dp),
             contentScale = ContentScale.Fit,
-            model = details?.imageUrl,
+            model = details?.imageUrl?.toThumbUrl(),
             contentDescription = details?.slug,
             placeholder = painterResource(id = R.drawable.team_logo),
             error = painterResource(id = R.drawable.team_logo)

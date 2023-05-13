@@ -16,4 +16,10 @@ object Utils {
 
         return outputDate
     }
+    fun String.toThumbUrl(): String {
+        val lastIndex = this.lastIndexOf('/')
+        val fileName = this.substring(lastIndex + 1)
+        val thumbFileName = "thumb_$fileName"
+        return this.replace(fileName, thumbFileName)
+    }
 }
