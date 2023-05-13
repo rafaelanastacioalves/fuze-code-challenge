@@ -6,7 +6,10 @@ import retrofit2.http.Query
 interface APIClient {
 
     @GET("/csgo/matches/upcoming")
-    suspend fun getMatchList(): List<Match>;
+    suspend fun getUpComingMatchList(): List<Match>;
+
+    @GET("/csgo/matches/running")
+    suspend fun getRunningMatchList(): List<Match>;
 
 
     @GET("/csgo/teams")

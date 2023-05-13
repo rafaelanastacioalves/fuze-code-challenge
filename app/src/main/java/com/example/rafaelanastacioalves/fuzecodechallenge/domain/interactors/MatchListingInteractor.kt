@@ -12,9 +12,23 @@ class MatchListingInteractor(val appRepository: AppRepository) :
         flowCollector: FlowCollector<Resource<List<Match>>>,
     ) {
         flowCollector.emit(Resource.loading())
-        val resource = appRepository.getMatchList()
-        flowCollector.emit(resource)
+        val upComingMatchResource = appRepository.getUpComingMatchList()
+        val runningMatchResource = appRepository.getRunningMatchList()
+
+        if (upComingMatchResource.status == Resource.Status.SUCCESS &&
+                runningMatchResource.status == Resource.Status.SUCCESS){
+            val upComingList : List<Match> = upComingMatchResource.data.orEmpty()
+            val runningList = runningMatchResource.data.orEmpty()
+            val finalList = runningList + upComingList
+            flowCollector.emit(Resource.success(finalList))
+            return
+        }
+        flowCollector.emit(Resource.error(Resource.Status.GENERIC_ERROR, message = "One of the Repository fetch failed: \n " +
+                "UpComing error: ${upComingMatchResource.message} \n " +
+                "Running error: ${runningMatchResource.message}"))
     }
+
+
 
 
     class RequestValues :

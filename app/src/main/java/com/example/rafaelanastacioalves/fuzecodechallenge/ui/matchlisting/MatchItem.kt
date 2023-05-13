@@ -25,6 +25,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,6 +42,7 @@ import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Serie
 import com.example.rafaelanastacioalves.fuzecodechallenge.domain.entities.Team
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.Grey
 import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.RafaelanastacioalvesfuzechallengeTheme
+import com.example.rafaelanastacioalves.fuzecodechallenge.ui.theme.Red
 import com.example.rafaelanastacioalves.fuzecodechallenge.utils.Utils
 
 @Composable
@@ -68,12 +70,14 @@ fun ScheduledAtRepresentation(modifier: Modifier, match: Match) {
             .padding(bottom = 16.dp),
         horizontalArrangement = Arrangement.End
     ) {
+        val backGroundColor = if(match.status == "running") Red else Grey
+        val scheduledText = if(match.status == "running") stringResource(id = R.string.now) else Utils.formatDateTime(match.beginAt.orEmpty())
         Surface(
-            modifier = modifier, shape = RoundedCornerShape(bottomStart = 16.dp), color = Grey
+            modifier = modifier, shape = RoundedCornerShape(bottomStart = 16.dp), color = backGroundColor
         ) {
             Text(
                 modifier = modifier.padding(8.dp),
-                text = Utils.formatDateTime(match.beginAt.orEmpty()),
+                text = scheduledText ,
                 textAlign = TextAlign.Center,
                 fontSize = 8.sp,
                 fontWeight = FontWeight.Bold,
@@ -118,7 +122,9 @@ fun TeamRepresentation(modifier: Modifier, match: Match) {
     ) {
         if (match.opponents.isEmpty().not()) {
             Team1Area(modifier, details = match.opponents.getOrNull(0)?.opponentDetails)
-            Column(modifier = modifier.fillMaxHeight().padding(horizontal = 20.dp), verticalArrangement = Arrangement.Center) {
+            Column(modifier = modifier
+                .fillMaxHeight()
+                .padding(horizontal = 20.dp), verticalArrangement = Arrangement.Center) {
                 Text(modifier = modifier.alpha(0.5f), text = "VS", fontSize = 12.sp)
             }
             Team2Area(modifier, details = match.opponents.getOrNull(1)?.opponentDetails)
