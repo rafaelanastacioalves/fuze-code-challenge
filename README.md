@@ -47,3 +47,6 @@ I used the following libraries and solutions:
 
 The app can be built like any other app. Just important to remember to use Java 17 to build the app.
 The same applies to tests.
+### Build Variants
+- You can use the "debug" variant to debug the app more easily.
+- You can use the "release" variant, which is using "minifyEnabled", so you can attest some app optimizations, specially those related to [Jetpack Compose performance](https://developer.android.com/jetpack/compose/performance#build-release)
